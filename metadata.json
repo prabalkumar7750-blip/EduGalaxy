@@ -1,0 +1,6 @@
+{
+  "name": "EduGalaxy",
+  "description": "AI-powered educational ecosystem for students from Class 1 to postgraduate and competitive exam levels.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

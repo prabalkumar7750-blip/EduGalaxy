@@ -1,0 +1,409 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated student or admin profile, academic selection, and gamification stats.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "Student display name" },
+        "email": { "type": "string", "description": "Verified account email (owner/admin only)" },
+        "photoUrl": { "type": "string", "description": "Optional avatar URL" },
+        "role": { "type": "string", "enum": ["student", "admin"], "description": "Account role" },
+        "selectedLevel": { "type": "string", "description": "Selected class, degree, or exam level" },
+        "selectedStream": { "type": "string", "description": "Selected academic stream" },
+        "selectedCourse": { "type": "string", "description": "Selected course or board" },
+        "selectedUniversity": { "type": "string", "description": "Selected university or board" },
+        "preferredLanguage": { "type": "string", "enum": ["English", "Hindi", "Bilingual"] },
+        "xp": { "type": "integer", "description": "Total learning XP points" },
+        "coins": { "type": "integer", "description": "Earned study coins" },
+        "streakDays": { "type": "integer", "description": "Consecutive daily learning streak" },
+        "dailyStudyMinutes": { "type": "integer", "description": "Minutes studied today" },
+        "dailyGoalMinutes": { "type": "integer", "description": "Daily study goal in minutes" },
+        "completedChaptersCount": { "type": "integer", "description": "Total completed chapters" },
+        "reducedMotion": { "type": "boolean", "description": "Accessibility reduced motion preference" },
+        "badges": { "type": "array", "description": "Earned achievement badge IDs" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": [
+        "userId", "displayName", "email", "role", "selectedLevel", "selectedStream",
+        "selectedCourse", "selectedUniversity", "preferredLanguage", "xp", "coins",
+        "streakDays", "dailyStudyMinutes", "dailyGoalMinutes", "completedChaptersCount",
+        "reducedMotion", "badges", "createdAt", "updatedAt"
+      ]
+    },
+    "UserBookmark": {
+      "title": "UserBookmark",
+      "description": "Saved questions, videos, PDFs, or universities per student.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "itemType": { "type": "string", "enum": ["question", "pdf", "video", "university"] },
+        "itemId": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "itemType", "itemId", "title", "subject", "subtitle", "createdAt"]
+    },
+    "UserDownload": {
+      "title": "UserDownload",
+      "description": "Offline PDF study materials downloaded to device storage.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "pdfId": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "localFileName": { "type": "string" },
+        "sizeKb": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "pdfId", "title", "category", "subject", "localFileName", "sizeKb", "createdAt"]
+    },
+    "TestAttempt": {
+      "title": "TestAttempt",
+      "description": "Completed mock test score, timing, and topic analytics.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "testId": { "type": "string" },
+        "testTitle": { "type": "string" },
+        "subject": { "type": "string" },
+        "totalQuestions": { "type": "integer" },
+        "attempted": { "type": "integer" },
+        "correct": { "type": "integer" },
+        "incorrect": { "type": "integer" },
+        "unanswered": { "type": "integer" },
+        "score": { "type": "number" },
+        "maxScore": { "type": "number" },
+        "accuracyPercent": { "type": "number" },
+        "timeTakenSeconds": { "type": "integer" },
+        "weakTopics": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId", "testId", "testTitle", "subject", "totalQuestions", "attempted",
+        "correct", "incorrect", "unanswered", "score", "maxScore", "accuracyPercent",
+        "timeTakenSeconds", "weakTopics", "createdAt"
+      ]
+    },
+    "ChapterProgress": {
+      "title": "ChapterProgress",
+      "description": "Chapter completion tracking per student.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "subjectName": { "type": "string" },
+        "chapterId": { "type": "string" },
+        "chapterTitle": { "type": "string" },
+        "progressPercent": { "type": "integer" },
+        "videoCompleted": { "type": "boolean" },
+        "notesRead": { "type": "boolean" },
+        "questionsPracticed": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId", "subjectId", "subjectName", "chapterId", "chapterTitle",
+        "progressPercent", "videoCompleted", "notesRead", "questionsPracticed",
+        "createdAt", "updatedAt"
+      ]
+    },
+    "AiSession": {
+      "title": "AiSession",
+      "description": "Saved EduGalaxy AI Tutor doubt-solving interaction.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "subject": { "type": "string" },
+        "academicLevel": { "type": "string" },
+        "language": { "type": "string" },
+        "prompt": { "type": "string" },
+        "response": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "subject", "academicLevel", "language", "prompt", "response", "createdAt"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public opt-in gamification leaderboard entry without PII.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "selectedLevel": { "type": "string" },
+        "xp": { "type": "integer" },
+        "streakDays": { "type": "integer" },
+        "publicOptIn": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "selectedLevel", "xp", "streakDays", "publicOptIn", "createdAt", "updatedAt"]
+    },
+    "QuestionItem": {
+      "title": "QuestionItem",
+      "description": "Admin-published important question or practice question.",
+      "type": "object",
+      "properties": {
+        "subject": { "type": "string" },
+        "academicLevel": { "type": "string" },
+        "chapter": { "type": "string" },
+        "topic": { "type": "string" },
+        "questionType": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "marks": { "type": "integer" },
+        "year": { "type": "string" },
+        "source": { "type": "string" },
+        "statement": { "type": "string" },
+        "options": { "type": "array" },
+        "correctAnswer": { "type": "string" },
+        "explanationEn": { "type": "string" },
+        "explanationHi": { "type": "string" },
+        "aiGenerated": { "type": "boolean" },
+        "repeatedTag": { "type": "boolean" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "subject", "academicLevel", "chapter", "topic", "questionType", "difficulty",
+        "marks", "year", "source", "statement", "options", "correctAnswer",
+        "explanationEn", "explanationHi", "aiGenerated", "repeatedTag", "published",
+        "createdBy", "createdAt", "updatedAt"
+      ]
+    },
+    "VideoLesson": {
+      "title": "VideoLesson",
+      "description": "Admin-published animated video lesson metadata and captions.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "academicLevel": { "type": "string" },
+        "chapter": { "type": "string" },
+        "lessonMode": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "language": { "type": "string" },
+        "instructor": { "type": "string" },
+        "summary": { "type": "string" },
+        "keyConcepts": { "type": "array" },
+        "captionsEn": { "type": "array" },
+        "captionsHi": { "type": "array" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "title", "subject", "academicLevel", "chapter", "lessonMode", "durationMinutes",
+        "language", "instructor", "summary", "keyConcepts", "captionsEn", "captionsHi",
+        "published", "createdBy", "createdAt", "updatedAt"
+      ]
+    },
+    "PdfMaterial": {
+      "title": "PdfMaterial",
+      "description": "Admin-published study PDF and revision notes.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "academicLevel": { "type": "string" },
+        "chapter": { "type": "string" },
+        "source": { "type": "string" },
+        "pagesCount": { "type": "integer" },
+        "summary": { "type": "string" },
+        "contentSections": { "type": "array" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "title", "category", "subject", "academicLevel", "chapter", "source",
+        "pagesCount", "summary", "contentSections", "published", "createdBy",
+        "createdAt", "updatedAt"
+      ]
+    },
+    "MockTest": {
+      "title": "MockTest",
+      "description": "Admin-published mock test configuration.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "subject": { "type": "string" },
+        "academicLevel": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "negativeMarking": { "type": "number" },
+        "questionCount": { "type": "integer" },
+        "totalMarks": { "type": "integer" },
+        "questionIds": { "type": "array" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "title", "category", "subject", "academicLevel", "durationMinutes",
+        "negativeMarking", "questionCount", "totalMarks", "questionIds",
+        "published", "createdBy", "createdAt", "updatedAt"
+      ]
+    },
+    "UniversityInfo": {
+      "title": "UniversityInfo",
+      "description": "Admin-published verified university or institution directory entry.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "location": { "type": "string" },
+        "websiteUrl": { "type": "string" },
+        "resultsUrl": { "type": "string" },
+        "admitCardUrl": { "type": "string" },
+        "courses": { "type": "array" },
+        "departments": { "type": "array" },
+        "examInfo": { "type": "string" },
+        "notices": { "type": "array" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "name", "category", "location", "websiteUrl", "resultsUrl", "admitCardUrl",
+        "courses", "departments", "examInfo", "notices", "published", "createdBy",
+        "createdAt", "updatedAt"
+      ]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Platform notifications and featured exam alerts.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "category": { "type": "string" },
+        "published": { "type": "boolean" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "message", "category", "published", "createdBy", "createdAt", "updatedAt"]
+    },
+    "StudentReport": {
+      "title": "StudentReport",
+      "description": "Content feedback or question error report submitted by students.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "targetType": { "type": "string" },
+        "targetId": { "type": "string" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "resolved", "dismissed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "targetType", "targetId", "reason", "status", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "Trusted admin role assignment.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "grantedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email", "grantedBy", "createdAt"]
+    },
+    "AdminAuditLog": {
+      "title": "AdminAuditLog",
+      "description": "Immutable admin content management audit log.",
+      "type": "object",
+      "properties": {
+        "adminId": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "targetCollection": { "type": "string" },
+        "targetId": { "type": "string" },
+        "summary": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["adminId", "adminEmail", "action", "targetCollection", "targetId", "summary", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Private student/admin profile and gamification metrics."
+    },
+    "/users/{userId}/bookmarks/{bookmarkId}": {
+      "schema": { "$ref": "#/entities/UserBookmark" },
+      "description": "Student saved questions, PDFs, videos, and universities."
+    },
+    "/users/{userId}/downloads/{downloadId}": {
+      "schema": { "$ref": "#/entities/UserDownload" },
+      "description": "Student downloaded offline study material records."
+    },
+    "/users/{userId}/test_attempts/{attemptId}": {
+      "schema": { "$ref": "#/entities/TestAttempt" },
+      "description": "Student completed mock test attempt history and analytics."
+    },
+    "/users/{userId}/progress/{progressId}": {
+      "schema": { "$ref": "#/entities/ChapterProgress" },
+      "description": "Student chapter-wise progress records."
+    },
+    "/users/{userId}/ai_sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/AiSession" },
+      "description": "Saved EduGalaxy AI Tutor Q&A sessions."
+    },
+    "/leaderboard/{userId}": {
+      "schema": { "$ref": "#/entities/LeaderboardEntry" },
+      "description": "Public opt-in student XP leaderboard without PII."
+    },
+    "/questions/{questionId}": {
+      "schema": { "$ref": "#/entities/QuestionItem" },
+      "description": "Admin-managed question bank."
+    },
+    "/videos/{videoId}": {
+      "schema": { "$ref": "#/entities/VideoLesson" },
+      "description": "Admin-managed animated video lessons."
+    },
+    "/pdf_materials/{pdfId}": {
+      "schema": { "$ref": "#/entities/PdfMaterial" },
+      "description": "Admin-managed PDF notes and study guides."
+    },
+    "/mock_tests/{testId}": {
+      "schema": { "$ref": "#/entities/MockTest" },
+      "description": "Admin-managed mock tests."
+    },
+    "/universities/{universityId}": {
+      "schema": { "$ref": "#/entities/UniversityInfo" },
+      "description": "Admin-managed verified university directory."
+    },
+    "/announcements/{announcementId}": {
+      "schema": { "$ref": "#/entities/Announcement" },
+      "description": "Admin-managed platform announcements and notifications."
+    },
+    "/student_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/StudentReport" },
+      "description": "Student content moderation reports."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Authoritative admin role directory."
+    },
+    "/admin_audit_logs/{logId}": {
+      "schema": { "$ref": "#/entities/AdminAuditLog" },
+      "description": "Append-only admin audit trail."
+    }
+  }
+}

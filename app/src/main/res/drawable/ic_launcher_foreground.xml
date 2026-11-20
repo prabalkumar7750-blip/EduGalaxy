@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Orbital Galaxy Gold Arc -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M24,62 C28,36 74,24 85,43 C90,52 80,68 58,76"
+        android:strokeColor="#FFFFD54F"
+        android:strokeLineCap="round"
+        android:strokeWidth="2.8" />
+    <!-- Gold Orbit Star -->
+    <path
+        android:fillColor="#FFFFD54F"
+        android:pathData="M83,35 L84.8,38.8 L89,39.4 L86,42.3 L86.7,46.4 L83,44.4 L79.3,46.4 L80,42.3 L77,39.4 L81.2,38.8 Z" />
+    <!-- Open Book Left Wing -->
+    <path
+        android:fillColor="#FFE0F7FA"
+        android:pathData="M53,55 C44,50 33,51 27,54 L27,73 C34,69 44,69 53,74 Z" />
+    <!-- Open Book Right Wing -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M55,55 C64,50 75,51 81,54 L81,73 C74,69 64,69 55,74 Z" />
+    <!-- Book Cyan Base Accent -->
+    <path
+        android:fillColor="#FF00E5FF"
+        android:pathData="M25,74 C35,70 46,71 54,76 C62,71 73,70 83,74 L81,77 C72,73 62,74 54,79 C46,74 36,73 27,77 Z" />
+    <!-- Graduation Cap Top Diamond -->
+    <path
+        android:fillColor="#FF38BDF8"
+        android:pathData="M54,30 L74,40 L54,50 L34,40 Z" />
+    <!-- Graduation Cap Base -->
+    <path
+        android:fillColor="#FF7C3AED"
+        android:pathData="M42,45 L42,52 C42,55 47,57 54,57 C61,57 66,55 66,52 L66,45 L54,51 Z" />
+    <!-- Graduation Tassel -->
+    <path
+        android:fillColor="#FFFFD54F"
+        android:pathData="M71,41 L71,52 L73,54 L69,54 L71,52 Z" />
+</vector>
